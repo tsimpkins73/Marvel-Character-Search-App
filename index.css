@@ -1,0 +1,60 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Marvel;
+  color: white;
+  background-image: url(images/background.jpg);
+  margin: 0;
+  background-size: cover;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 1%;
+  display: block;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.charImg {
+  width: 70%;
+  margin-top: 3%;
+  display: inline-block;
+  border: 2px solid white;
+}
+
+button {
+  width: 60%;
+  height: auto;
+  margin: 1%;
+  padding: 1%;
+  text-align: center;
+  background-color: red;
+  color: white;
+  font-size: 1.5em;
+}
+
+.charPar {
+  width: 70%;
+  margin-top: 3%;
+  display: inline-block;
+  font-family: Maven Pro;
+}
+
+.button-container {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 70%;
+  margin: auto;
+}
+
+h1 {
+  font-size: 3em;
+}
