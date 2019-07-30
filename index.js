@@ -7,9 +7,52 @@ const movieAPIKey = "663447d911c61d96456fdace68aad672";
 
 var charName = '';
 
-//localStorage.favorites = JSON.stringify(myarray);
+var favoritesArray = [];
 
-//myarray = JSON.parse(localStorage.favorites);
+localStorage.setItem("favorites", JSON.stringify(favoritesArray))
+
+function setFavorite(){
+  $(document).on('click', 'button.favorite', function (event) {
+    event.preventDefault();
+    favoritesArray.push(charName)
+    var localFavorites = favoritesArray.join();
+    localStorage.setItem('favorites', JSON.stringify(favoritesArray));
+    console.log("This Character was set as a Favorite");
+    //var storedFavorites = localStorage.getItem("favorites");
+    //favoritesArray.push(JSON.parse(storedFavorites));
+    //favoritesArray.push(JSON.parse(localStorage.getItem('favorites')));
+    //localStorage.favorite = JSON.stringify(favoritesArray);
+    console.log(favoritesArray);
+          });
+  }
+
+  function viewFavorites(){
+    $(document).on('click', 'button.userFavorites', function (event) {
+      event.preventDefault();
+      $('div.favoritesList').html('');
+      //var storedFavorites = localStorage.getItem("favorites");
+      //console.log(storedFavorites[0]);
+      let favoritesArray = JSON.parse(localStorage.getItem('favorites')) || [];
+      console.log(favoritesArray);
+      for (let i = 0; i < favoritesArray.length; i++) {
+        $('div.favoritesList').append(
+          "<button class= 'localFavorite' type='localFavorite' id='" + favoritesArray[i] + "' name='" + favoritesArray[i] + "' value='" + favoritesArray[i] + "'>" + favoritesArray[i] + "</button>")
+      };
+      console.log("Here are this users favorites");
+    });
+    }
+
+function getFavoriteCharacter() {
+      $(document).on('click', 'button.localFavorite', function (event) {
+      let favoriteCharacter = $('button.localFavorite').html().toLowerCase();
+      console.log(favoriteCharacter);
+      fetch('https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=' + favoriteCharacter + '&apikey=' + marvelAPIKey)
+        .then(response => response.json())
+        .then(responseJson => displayCharacter(responseJson))
+        .catch(error => alert('Something went wrong. Try again later.'));
+    });
+  }
+
 
 function getCharacter() {
   const character = $('#characterSearch').val().toLowerCase()
@@ -23,6 +66,7 @@ function displayCharacter(responseJson) {
   console.log(responseJson);
   const picStatus = (responseJson.status);
   charName = `${responseJson.data.results[0].name}`;
+  console.log(charName);
   $('.results').empty();
   //if(${responseJson.data.count} === 0){
   //$('.results').append(<h1>${responseJson.data.results[0].name}</h1>
@@ -33,10 +77,11 @@ function displayCharacter(responseJson) {
     <img class="charImg" src="${responseJson.data.results[0].thumbnail.path}.${responseJson.data.results[0].thumbnail.extension}" alt="${responseJson.data.results[0].name}">
     <p class="charPar">${responseJson.data.results[0].description}</p>
     <div class="button-container">
-    <button class = "moreInfoLink, stories" type="stories-API" name="Stories" value="Stories">Stories</button>
-    <button class = "moreInfoLink events" type="events-API" name="Events" value="Stories">Events</button>
+    <button class = "moreInfoLink stories" type="stories-API" name="Stories" value="Stories">Stories</button>
+    <button class = "moreInfoLink events" type="events-API" name="Events" value="Events">Events</button>
     <button class = "moreInfoLink movies" type="movies-API" name="Movies" value="Movies">Movies</button>
-        </div>`
+        </div>
+        <button class = "moreInfoLink favorite" type="favorite" name="Favorite" value="Favorite">Favorite</button>`
   );
   $('.results').removeClass('hidden');
 }
@@ -65,6 +110,7 @@ function getStories() {
 
 function displayStories(responseJson) {
   const availableStories = (responseJson.data.results[0].stories.available);
+  console.log(responseJson);
   console.log('Fetch the Stories');
   if (availableStories > 0) {
     removeAdditions();
@@ -160,4 +206,7 @@ $(function () {
   watchStories();
   watchEvents();
   watchMovies();
+  setFavorite();
+  viewFavorites();
+  getFavoriteCharacter();
 });

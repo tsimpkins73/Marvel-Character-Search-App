@@ -6,8 +6,9 @@ body {
   font-family: Marvel;
   color: white;
   background-image: url(images/background.jpg);
-  margin: 0;
-  background-size: cover;
+  margin: auto;
+  padding: auto;
+  background-size: cover no-repeat;
 }
 
 .container {
