@@ -40,6 +40,25 @@ button {
   font-size: 1.5em;
 }
 
+.button {
+  width: auto;
+  height: auto;
+  margin: 1%;
+  padding: 1%;
+  text-align: center;
+  background-color: red;
+  color: white;
+  font-size: 1em;
+}
+
+#characterSearch{
+  width: auto;
+  height: auto;
+  margin: 1%;
+  padding: 1%;
+  font-size: 1em;
+}
+
 .charPar {
   width: 70%;
   margin-top: 3%;
