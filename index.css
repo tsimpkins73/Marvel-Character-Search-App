@@ -31,7 +31,7 @@ body {
 }
 
 button {
-  width: 60%;
+  width: 70%;
   height: auto;
   margin: 1%;
   padding: 1%;
@@ -41,8 +41,26 @@ button {
   font-size: 1.5em;
 }
 
+.localFavorite{
+  width: 40%;
+  margin: auto;
+  margin-top:1%;
+  display: block;
+  align-items: center;
+  text-align: center;
+}
+div#hidden{
+  display: none;
+}
+
+.favoritesList{
+  display: block;
+  align-items: center;
+  text-align: center;
+}
+
 .button {
-  width: auto;
+  width: 70%;
   height: auto;
   margin: 1%;
   padding: 1%;
