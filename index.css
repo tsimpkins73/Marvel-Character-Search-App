@@ -41,19 +41,20 @@ button {
   font-size: 1.5em;
 }
 
-.localFavorite{
+.localFavorite {
   width: 40%;
   margin: auto;
-  margin-top:1%;
+  margin-top: 1%;
   display: block;
   align-items: center;
   text-align: center;
 }
-div#hidden{
+
+div#hidden {
   display: none;
 }
 
-.favoritesList{
+.favoritesList {
   display: block;
   align-items: center;
   text-align: center;
@@ -70,7 +71,7 @@ div#hidden{
   font-size: 1em;
 }
 
-#characterSearch{
+#characterSearch {
   width: auto;
   height: auto;
   margin: 1%;

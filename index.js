@@ -220,35 +220,32 @@ function getMovies() {
 
 function displayMovies(responseJson) {
   console.log(responseJson);
-  
-/*  if (!responseJson.data) {
-    return;
-  } else {*/
-    const openInfo = document.getElementById("moreInfo").innerHTML == "";
-    console.log(openInfo);
 
-    if (openInfo === false) {
-      $('div.moreInfo').toggleClass("hidden");
-      $('div.moreInfo').empty();
-    } else {  
-      $('div.moreInfo').toggleClass("hidden");
-  const availableMovies = (responseJson.total_results);
-  console.log(charName + ' has ' + availableMovies + ' Movies');
-  if (availableMovies > 0) {
-    console.log(availableMovies + ' Movies');
-    removeAdditions();
-    $('.moreInfo').append(`<div class="characterMovies"><h1>Movies</h1></div>`);
-    for (let i = 0; i < availableMovies; i++) {
-      $('.characterMovies').append(
-        `<h2>${responseJson.results[i].name}</h1>`
-      )
-    };
+  const openInfo = document.getElementById("moreInfo").innerHTML == "";
+  console.log(openInfo);
+
+  if (openInfo === false) {
+    $('div.moreInfo').toggleClass("hidden");
+    $('div.moreInfo').empty();
   } else {
-    removeAdditions();
-    $('.moreInfo').append(`<div class="characterMovies"><h2>No movies found</h2></div>`);
+    $('div.moreInfo').toggleClass("hidden");
+    const availableMovies = (responseJson.total_results);
+    console.log(charName + ' has ' + availableMovies + ' Movies');
+    if (availableMovies > 0) {
+      console.log(availableMovies + ' Movies');
+      removeAdditions();
+      $('.moreInfo').append(`<div class="characterMovies"><h1>Movies</h1></div>`);
+      for (let i = 0; i < availableMovies; i++) {
+        $('.characterMovies').append(
+          `<h2>${responseJson.results[i].name}</h1>`
+        )
+      };
+    } else {
+      removeAdditions();
+      $('.moreInfo').append(`<div class="characterMovies"><h2>No movies found</h2></div>`);
+    };
   };
-};
-  
+
 }
 
 function removeAdditions() {
