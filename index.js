@@ -23,8 +23,6 @@ function setFavorite() {
     favoritesArray.push(charName);
     var localFavorites = favoritesArray.join();
     localStorage.setItem('favorites', JSON.stringify(favoritesArray));
-    console.log("This Character was set as a Favorite");
-    console.log(favoritesArray);
   });
 }
 
@@ -41,12 +39,11 @@ function viewFavorites() {
       $('div#favorites').addClass("favoritesList");
       $('div.favoritesList').removeClass("hidden");
       let favoritesArray = JSON.parse(localStorage.getItem('favorites')) || [];
-      console.log(favoritesArray);
       for (let i = 0; i < favoritesArray.length; i++) {
         $('div.favoritesList').append(
           "<button class= 'localFavorite' type='localFavorite' id='" + favoritesArray[i] + "' name='" + favoritesArray[i] + "' value='" + favoritesArray[i] + "'>" + favoritesArray[i] + "</button>")
       };
-      console.log("Here are this users favorites");
+
     }
   });
 }
@@ -54,13 +51,12 @@ function viewFavorites() {
 function getFavoriteCharacter() {
   $(document).on('click', 'button.localFavorite', function (event) {
     let favoriteCharacter = $(event.target).html().toLowerCase();
-    console.log(favoriteCharacter);
     fetch('https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=' + favoriteCharacter + '&apikey=' + marvelAPIKey)
       .then(response => response.json())
       .then(responseJson => displayCharacter(responseJson))
       .catch(error => {
         alert('Something went wrong. Try again later.');
-        console.log(error);
+
       });
   });
 }
@@ -75,10 +71,10 @@ function getCharacter() {
 }
 
 function displayCharacter(responseJson) {
-  console.log(responseJson);
+
   const picStatus = (responseJson.status);
   charName = `${responseJson.data.results[0].name}`;
-  console.log(charName);
+
   $('.results').empty();
   $('.results').append(
     `<div class="characterInfo">
@@ -116,27 +112,19 @@ function getStories() {
     .then(responseJson => displayStories(responseJson))
     .catch(error => {
       alert('Something went wrong. Try again later.');
-      console.log(error);
     });
 }
 
 function displayStories(responseJson) {
-  console.log(responseJson);
 
   if (!responseJson.data) {
     return;
   } else {
-    const openStories = document.getElementById("moreInfo").innerHTML == "";
-    console.log(openStories);
 
-    if (openStories === false) {
-      $('div.moreInfo').toggleClass("hidden");
-      $('div.moreInfo').empty();
+    if ($('.characterStories').length > 0) {
+      $('.characterStories').remove();
     } else {
       const availableStories = (responseJson.data.results[0].stories.items.length);
-      console.log('Fetch the Stories');
-      $('div.moreInfo').toggleClass("hidden");
-
       if (availableStories > 0) {
         removeAdditions();
         $('.moreInfo').append(`<div class="characterStories">
@@ -175,16 +163,10 @@ function displayEvents(responseJson) {
   if (!responseJson.data) {
     return;
   } else {
-    const openEvents = document.getElementById("moreInfo").innerHTML == "";
-    console.log(openEvents);
-
-    if (openEvents === false) {
-      $('div.moreInfo').toggleClass("hidden");
-      $('div.moreInfo').empty();
+    if ($('.characterEvents').length > 0) {
+      $('.characterEvents').remove();
     } else {
       const availableEvents = (responseJson.data.results[0].events.items.length);
-      console.log('Fetch the Events');
-      $('div.moreInfo').toggleClass("hidden");
 
       if (availableEvents > 0) {
         removeAdditions();
@@ -219,20 +201,14 @@ function getMovies() {
 }
 
 function displayMovies(responseJson) {
-  console.log(responseJson);
 
-  const openInfo = document.getElementById("moreInfo").innerHTML == "";
-  console.log(openInfo);
-
-  if (openInfo === false) {
-    $('div.moreInfo').toggleClass("hidden");
-    $('div.moreInfo').empty();
+  if ($('.characterMovies').length > 0) {
+    $('.characterMovies').remove();
   } else {
-    $('div.moreInfo').toggleClass("hidden");
     const availableMovies = (responseJson.total_results);
-    console.log(charName + ' has ' + availableMovies + ' Movies');
+
     if (availableMovies > 0) {
-      console.log(availableMovies + ' Movies');
+
       removeAdditions();
       $('.moreInfo').append(`<div class="characterMovies"><h1>Movies</h1></div>`);
       for (let i = 0; i < availableMovies; i++) {
@@ -257,7 +233,7 @@ function removeAdditions() {
 
 
 $(function () {
-  console.log('App loaded! Waiting for submit!');
+
   watchForm();
   watchStories();
   watchEvents();

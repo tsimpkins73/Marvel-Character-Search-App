@@ -21,9 +21,11 @@
     <h2>What character are you interested in?</h2>
 
     <form>
-
-      <input type="text" id="characterSearch" name="Character Search" placeholder="Magneto">
-      <input type="submit" class="button" value="Pick your character!">
+     
+        <legend class="hidden">Character Search</legend>
+        <label for="Character Name Search">Character Search</label>
+        <input type="text" id="characterSearch" name="Character Search" placeholder="Magneto">
+        <button type="submit" class="button" value="Pick your character!">Pick your character!</button>
     </form>
     <div class="favorites"><button class="moreInfoLink userFavorites" type="favorites" name="Favorites"
         value="Favorites">Or View Your Favorites</button>
@@ -32,7 +34,7 @@
     <section class="results hidden">
 
     </section>
-    <div id="moreInfo" class="moreInfo hidden"></div>
+    <div id="moreInfo" class="moreInfo"></div>
   </div>
   <script src="index.js"></script>
 </body>
