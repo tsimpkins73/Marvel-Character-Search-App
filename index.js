@@ -14,12 +14,15 @@ if (localStorage.favorites) {
 
 
 function setFavorite() {
+  //Set the current character as a favorite utilizing localStorage when the"Favorite" button is pressed.
   $(document).on('click', 'button.favorite', function (event) {
     event.preventDefault();
     const itemFound = favoritesArray.find(item => item === charName);
+    //If the character is already in the favorites list, it won't add it.
     if (itemFound) {
       return;
     }
+    //If the character is NOT already in the favorites list, this fucntion will add it to an array and then stringify that array to localStorage.
     favoritesArray.push(charName);
     var localFavorites = favoritesArray.join();
     localStorage.setItem('favorites', JSON.stringify(favoritesArray));
@@ -27,6 +30,7 @@ function setFavorite() {
 }
 
 function viewFavorites() {
+  //Show the "Favorites" list as buttons when the "View Favorite" button is pressed.
   $(document).on('click', 'button.userFavorites', function (event) {
     event.preventDefault();
     const openFavorites = document.getElementById("favorites").innerHTML == "";
@@ -49,6 +53,7 @@ function viewFavorites() {
 }
 
 function getFavoriteCharacter() {
+  //Retrieve the selected character from the "Favorites" list that character's name button is pressed.
   $(document).on('click', 'button.localFavorite', function (event) {
     let favoriteCharacter = $(event.target).html().toLowerCase();
     fetch('https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=' + favoriteCharacter + '&apikey=' + marvelAPIKey)
@@ -63,6 +68,7 @@ function getFavoriteCharacter() {
 
 
 function getCharacter() {
+   //Retrieve the selected character from the value of the search input.
   const character = $('#characterSearch').val().toLowerCase()
   fetch('https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=' + character + '&apikey=' + marvelAPIKey)
     .then(response => response.json())
@@ -71,7 +77,7 @@ function getCharacter() {
 }
 
 function displayCharacter(responseJson) {
-
+//Display the character from the value of responseJson.
   const picStatus = (responseJson.status);
   charName = `${responseJson.data.results[0].name}`;
 
@@ -92,6 +98,7 @@ function displayCharacter(responseJson) {
 }
 
 function watchForm() {
+  //An event listener that activates the "Character Search" input 
   $('form').submit(event => {
     event.preventDefault();
     getCharacter();
@@ -99,6 +106,7 @@ function watchForm() {
 }
 
 function watchStories() {
+  //An event listener that activates the "Character Stories" input 
   $(document).on('click', 'button.stories', function (event) {
     event.preventDefault();
     getStories();
@@ -106,6 +114,7 @@ function watchStories() {
 }
 
 function getStories() {
+  //Retrieve the selected character's stories from the API.
   const character = $('.charName').html().toLowerCase()
   fetch('https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=' + character + '&apikey=' + marvelAPIKey)
     .then(response => response.json())
@@ -116,7 +125,7 @@ function getStories() {
 }
 
 function displayStories(responseJson) {
-
+//Display the selected character's stories from the API.
   if (!responseJson.data) {
     return;
   } else {
@@ -145,6 +154,7 @@ function displayStories(responseJson) {
 }
 
 function watchEvents() {
+  //An event listener that activates the "Character Events" input 
   $(document).on('click', 'button.events', function (event) {
     event.preventDefault();
     getEvents();
@@ -152,6 +162,7 @@ function watchEvents() {
 }
 
 function getEvents() {
+   //Retrieve the selected character's events from the API.
   const character = $('.charName').html().toLowerCase()
   fetch('https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=' + character + '&apikey=' + marvelAPIKey)
     .then(response => response.json())
@@ -160,6 +171,7 @@ function getEvents() {
 }
 
 function displayEvents(responseJson) {
+//Display the selected character's events from the API.
   if (!responseJson.data) {
     return;
   } else {
@@ -186,6 +198,7 @@ function displayEvents(responseJson) {
 }
 
 function watchMovies() {
+    //An event listener that activates the "Character Movies" input 
   $(document).on('click', 'button.movies', function (event) {
     event.preventDefault();
     getMovies();
@@ -193,6 +206,7 @@ function watchMovies() {
 }
 
 function getMovies() {
+//Retrieve the selected character's movies from the API.
   const character = $('.charName').html().toLowerCase()
   fetch('https://api.themoviedb.org/3/search/multi?api_key=' + movieAPIKey + '&language=en-US&query=marvel-' + character)
     .then(response => response.json())
@@ -201,7 +215,7 @@ function getMovies() {
 }
 
 function displayMovies(responseJson) {
-
+//Display the selected character's movies from the API.
   if ($('.characterMovies').length > 0) {
     $('.characterMovies').remove();
   } else {
@@ -225,6 +239,7 @@ function displayMovies(responseJson) {
 }
 
 function removeAdditions() {
+//A function that removes information from the "moreInfo" div 
   $('.characterStories').remove();
   $('.characterEvents').remove();
   $('.characterMovies').remove();
@@ -233,7 +248,7 @@ function removeAdditions() {
 
 
 $(function () {
-
+//A function that loads the necessary functions into the dom before their info is called 
   watchForm();
   watchStories();
   watchEvents();
